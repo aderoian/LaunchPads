@@ -1,0 +1,20 @@
+# Main configuration file for LaunchPad
+# Create by Cosmic5173
+# Message me on Discord: Cosmic#8011
+#     - If you need help.
+#     - If you have a plugin idea / feature request
+
+config-version: 2
+
+# ^^^ DO NOT TOUCH ^^^ #
+
+
+# Controls how powerful the launchpad is.
+# The higher the number set here, the more powerful the pad will be.
+# Default vanilla knockback: 0.4
+# Default LaunchPad knockback: 1
+knockback-amount: 1
+
+# Launch pads will not work in these worlds.
+# Names are CASE SENSITIVE
+disabled-worlds: []
