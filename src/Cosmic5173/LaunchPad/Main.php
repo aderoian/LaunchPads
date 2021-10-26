@@ -34,7 +34,7 @@ class Main extends PluginBase {
 
     public const CONFIG_VERSION = 2;
 
-    public static $instance;
+    public static Main $instance;
 
     public static function getInstance(): Main{
         return self::$instance;
@@ -49,37 +49,37 @@ class Main extends PluginBase {
             $this->getLogger()->alert("Your config file is out of date, and has been saved to 'config-old.yml'. A new config file has been generated.");
         }
 
-        BlockFactory::registerBlock(new class() extends StonePressurePlate{
+        BlockFactory::getInstance()->register(new class() extends StonePressurePlate{
             public function hasEntityCollision(): bool
             {
                 return true;
             }
 
-            public function addVelocityToEntity(Entity $entity, Vector3 $vector): void
+            public function addVelocityToEntity(Entity $entity): ?Vector3
             {
                 if($entity instanceof Living){
-                    if(!in_array($entity->getLevelNonNull()->getFolderName(), Main::getInstance()->getConfig()->get("disabled-worlds"))){
-                        $entity->knockBack($entity, 0, $entity->getDirectionVector()->getX(), $entity->getDirectionVector()->getZ(), Main::getInstance()->getConfig()->get("knockback-amount"));
+                    if(!in_array($entity->getWorld()->getFolderName(), Main::getInstance()->getConfig()->get("disabled-worlds"))){
+                        $entity->knockBack(0, $entity->getDirectionVector()->getX(), $entity->getDirectionVector()->getZ(), Main::getInstance()->getConfig()->get("knockback-amount"));
                     }
                 }
-                parent::addVelocityToEntity($entity, $vector);
+                return parent::addVelocityToEntity($entity);
             }
         }, true);
 
-        BlockFactory::registerBlock(new class() extends WoodenPressurePlate {
+        BlockFactory::getInstance()->register(new class() extends WoodenPressurePlate {
             public function hasEntityCollision(): bool
             {
                 return true;
             }
 
-            public function addVelocityToEntity(Entity $entity, Vector3 $vector): void
+            public function addVelocityToEntity(Entity $entity): ?Vector3
             {
-                if($entity instanceof Living) {
-                    if (!in_array($entity->getLevelNonNull()->getFolderName(), Main::getInstance()->getConfig()->get("disabled-worlds"))) {
-                        $entity->knockBack($entity, 0, $entity->getDirectionVector()->getX(), $entity->getDirectionVector()->getZ(), Main::getInstance()->getConfig()->get("knockback-amount"));
+                if($entity instanceof Living){
+                    if(!in_array($entity->getWorld()->getFolderName(), Main::getInstance()->getConfig()->get("disabled-worlds"))){
+                        $entity->knockBack(0, $entity->getDirectionVector()->getX(), $entity->getDirectionVector()->getZ(), Main::getInstance()->getConfig()->get("knockback-amount"));
                     }
                 }
-                parent::addVelocityToEntity($entity, $vector);
+                return parent::addVelocityToEntity($entity);
             }
         }, true);
     }

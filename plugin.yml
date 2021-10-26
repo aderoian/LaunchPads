@@ -2,5 +2,5 @@ name: LaunchPad
 description: Turns pressure plates into launch pads.
 author: Cosmic5173
 version: 1.1.0
-api: 3.0.0
+api: 4.0.0
 main: Cosmic5173\LaunchPad\Main
